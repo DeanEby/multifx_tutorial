@@ -14,11 +14,11 @@
 //==============================================================================
 /**
 */
-class Multifx_tutorialAudioProcessorEditor  : public juce::AudioProcessorEditor
+class MultiFXTutorialAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
-    Multifx_tutorialAudioProcessorEditor (Multifx_tutorialAudioProcessor&);
-    ~Multifx_tutorialAudioProcessorEditor() override;
+    MultiFXTutorialAudioProcessorEditor (MultiFXTutorialAudioProcessor&);
+    ~MultiFXTutorialAudioProcessorEditor() override;
 
     //==============================================================================
     void paint (juce::Graphics&) override;
@@ -27,7 +27,7 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    Multifx_tutorialAudioProcessor& audioProcessor;
+    MultiFXTutorialAudioProcessor& audioProcessor;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Multifx_tutorialAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MultiFXTutorialAudioProcessorEditor)
 };

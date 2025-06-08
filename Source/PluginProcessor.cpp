@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-Multifx_tutorialAudioProcessor::Multifx_tutorialAudioProcessor()
+MultiFXTutorialAudioProcessor::MultiFXTutorialAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
@@ -24,17 +24,17 @@ Multifx_tutorialAudioProcessor::Multifx_tutorialAudioProcessor()
 {
 }
 
-Multifx_tutorialAudioProcessor::~Multifx_tutorialAudioProcessor()
+MultiFXTutorialAudioProcessor::~MultiFXTutorialAudioProcessor()
 {
 }
 
 //==============================================================================
-const juce::String Multifx_tutorialAudioProcessor::getName() const
+const juce::String MultiFXTutorialAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool Multifx_tutorialAudioProcessor::acceptsMidi() const
+bool MultiFXTutorialAudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -43,7 +43,7 @@ bool Multifx_tutorialAudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool Multifx_tutorialAudioProcessor::producesMidi() const
+bool MultiFXTutorialAudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -52,7 +52,7 @@ bool Multifx_tutorialAudioProcessor::producesMidi() const
    #endif
 }
 
-bool Multifx_tutorialAudioProcessor::isMidiEffect() const
+bool MultiFXTutorialAudioProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
     return true;
@@ -61,50 +61,50 @@ bool Multifx_tutorialAudioProcessor::isMidiEffect() const
    #endif
 }
 
-double Multifx_tutorialAudioProcessor::getTailLengthSeconds() const
+double MultiFXTutorialAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int Multifx_tutorialAudioProcessor::getNumPrograms()
+int MultiFXTutorialAudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int Multifx_tutorialAudioProcessor::getCurrentProgram()
+int MultiFXTutorialAudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void Multifx_tutorialAudioProcessor::setCurrentProgram (int index)
+void MultiFXTutorialAudioProcessor::setCurrentProgram (int index)
 {
 }
 
-const juce::String Multifx_tutorialAudioProcessor::getProgramName (int index)
+const juce::String MultiFXTutorialAudioProcessor::getProgramName (int index)
 {
     return {};
 }
 
-void Multifx_tutorialAudioProcessor::changeProgramName (int index, const juce::String& newName)
+void MultiFXTutorialAudioProcessor::changeProgramName (int index, const juce::String& newName)
 {
 }
 
 //==============================================================================
-void Multifx_tutorialAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void MultiFXTutorialAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 }
 
-void Multifx_tutorialAudioProcessor::releaseResources()
+void MultiFXTutorialAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool Multifx_tutorialAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool MultiFXTutorialAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
   #if JucePlugin_IsMidiEffect
     juce::ignoreUnused (layouts);
@@ -129,7 +129,7 @@ bool Multifx_tutorialAudioProcessor::isBusesLayoutSupported (const BusesLayout& 
 }
 #endif
 
-void Multifx_tutorialAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void MultiFXTutorialAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
@@ -143,40 +143,39 @@ void Multifx_tutorialAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
     // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
-    
+
     //TODO: add APVTS
     //TODO: create audio parameters for all dsp choices
-    //TODO: update dsp here from audio parameters]
+    //TODO: update DSP here from audio parameters
     //TODO: save/load settings
     //TODO: save/load DSP order
     //TODO: Drag-To-Reorder GUI
     //TODO: GUI design for each DSP instance?
     //TODO: metering
     //TODO: prepare all DSP
-    //TODO: wet/dry knob
-    //TODO: mono & stereo versions [mono is bonus]
-    //TODO: Modulators [BONUS]
-    //TODO: Thread safe filter updating [BONUS]
+    //TODO: wet/dry knob [BONUS]
+    //TODO: mono & stereo versions [mono is BONUS]
+    //TODO: modulators [BONUS]
+    //TODO: thread-safe filter updating [BONUS]
     //TODO: pre/post filtering [BONUS]
     //TODO: delay module [BONUS]
     
-    
     auto newDSPOrder = DSP_Order();
-   
-    // Try to pull
-    while( dspOrderFifo.pull(newDSPOrder))
+    
+    //try to pull
+    while( dspOrderFifo.pull(newDSPOrder) )
     {
         
     }
-
-    // If you pulled, replace dspOrder
-    if( newDSPOrder != DSP_Order())
+    
+    //if you pulled, replace dspOrder;
+    if( newDSPOrder != DSP_Order() )
         dspOrder = newDSPOrder;
     
-    // Now convert dspOrder into an array of pointers
+    //now convert dspOrder into an array of pointers.
     DSP_Pointers dspPointers;
     
-    for (size_t i = 0; i < dspPointers.size(); ++i)
+    for( size_t i = 0; i < dspPointers.size(); ++i )
     {
         switch (dspOrder[i])
         {
@@ -186,7 +185,7 @@ void Multifx_tutorialAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
             case DSP_Option::Chorus:
                 dspPointers[i] = &chorus;
                 break;
-            case DSP_Option::Overdrive:
+            case DSP_Option::OverDrive:
                 dspPointers[i] = &overdrive;
                 break;
             case DSP_Option::LadderFilter:
@@ -197,42 +196,43 @@ void Multifx_tutorialAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
                 break;
         }
     }
-        
-        // Now process:
+    
+    //now process:
     auto block = juce::dsp::AudioBlock<float>(buffer);
     auto context = juce::dsp::ProcessContextReplacing<float>(block);
     
-    for( size_t i = 0; i < dspPointers.size(); ++i)
+    for( size_t i = 0; i < dspPointers.size(); ++i )
     {
-        if( dspPointers[i] != nullptr)
+        if( dspPointers[i] != nullptr )
         {
             dspPointers[i]->process(context);
         }
     }
-        
+    
+    
+    
 }
 
 //==============================================================================
-
-bool Multifx_tutorialAudioProcessor::hasEditor() const
+bool MultiFXTutorialAudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-juce::AudioProcessorEditor* Multifx_tutorialAudioProcessor::createEditor()
+juce::AudioProcessorEditor* MultiFXTutorialAudioProcessor::createEditor()
 {
-    return new Multifx_tutorialAudioProcessorEditor (*this);
+    return new MultiFXTutorialAudioProcessorEditor (*this);
 }
 
 //==============================================================================
-void Multifx_tutorialAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void MultiFXTutorialAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
 }
 
-void Multifx_tutorialAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void MultiFXTutorialAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
@@ -242,5 +242,5 @@ void Multifx_tutorialAudioProcessor::setStateInformation (const void* data, int 
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new Multifx_tutorialAudioProcessor();
+    return new MultiFXTutorialAudioProcessor();
 }

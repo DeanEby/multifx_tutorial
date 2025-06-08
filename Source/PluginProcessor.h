@@ -10,19 +10,18 @@
 
 #include <JuceHeader.h>
 #include <Fifo.h>
-
 //==============================================================================
 /**
 */
-class Multifx_tutorialAudioProcessor  : public juce::AudioProcessor
+class MultiFXTutorialAudioProcessor  : public juce::AudioProcessor
                             #if JucePlugin_Enable_ARA
                              , public juce::AudioProcessorARAExtension
                             #endif
 {
 public:
     //==============================================================================
-    Multifx_tutorialAudioProcessor();
-    ~Multifx_tutorialAudioProcessor() override;
+    MultiFXTutorialAudioProcessor();
+    ~MultiFXTutorialAudioProcessor() override;
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -56,12 +55,12 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-    
+
     enum class DSP_Option
     {
         Phase,
         Chorus,
-        Overdrive,
+        OverDrive,
         LadderFilter,
         END_OF_LIST
     };
@@ -78,7 +77,7 @@ private:
         {
             dsp.prepare(spec);
         }
-        void process(const juce::dsp::ProcessContextReplacing<float>& context) override
+        void process (const juce::dsp::ProcessContextReplacing<float>& context) override
         {
             dsp.process(context);
         }
@@ -86,6 +85,7 @@ private:
         {
             dsp.reset();
         }
+        
         DSP dsp;
     };
     
@@ -94,8 +94,8 @@ private:
     DSP_Choice<juce::dsp::Chorus<float>> chorus;
     DSP_Choice<juce::dsp::LadderFilter<float>> overdrive, ladderFilter;
     
-    using DSP_Pointers = std::array<juce::dsp::ProcessorBase*,
-        static_cast<size_t>(DSP_Option::END_OF_LIST)>;
+    using DSP_Pointers = std::array<juce::dsp::ProcessorBase*, static_cast<size_t>(DSP_Option::END_OF_LIST)>;
+    
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Multifx_tutorialAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MultiFXTutorialAudioProcessor)
 };
