@@ -144,6 +144,23 @@ void Multifx_tutorialAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
+    //TODO: add APVTS
+    //TODO: create audio parameters for all dsp choices
+    //TODO: update dsp here from audio parameters]
+    //TODO: save/load settings
+    //TODO: save/load DSP order
+    //TODO: Drag-To-Reorder GUI
+    //TODO: GUI design for each DSP instance?
+    //TODO: metering
+    //TODO: prepare all DSP
+    //TODO: wet/dry knob
+    //TODO: mono & stereo versions [mono is bonus]
+    //TODO: Modulators [BONUS]
+    //TODO: Thread safe filter updating [BONUS]
+    //TODO: pre/post filtering [BONUS]
+    //TODO: delay module [BONUS]
+    
+    
     auto newDSPOrder = DSP_Order();
    
     // Try to pull
